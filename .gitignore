@@ -1,0 +1,6 @@
+.DS_Store
+src/demo_constants.py
+.vscode/
+.venv/
+src/__pycache__/
+
