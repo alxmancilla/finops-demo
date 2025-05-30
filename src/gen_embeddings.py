@@ -30,53 +30,10 @@ def gen_embeddings():
     for doc, embedding in zip(docs, embeddings):
         coll.update_one({"_id": doc["_id"]}, {"$set": {"embedding": embedding}})
 
-def semantic_search(query):
-    """
-    Generate embeddings for the specified MongoDB collection.
-    Args:
-        collection (str): Collection name
-        query (str): Query string
-    """
-    coll = db["incidents"]
-
-    query_embedding = vo.embed([query], model="voyage-3.5", input_type="query").embeddings[0]
-
-    pipeline = [
-        {
-            "$vectorSearch": {
-                "index": "vector_index",
-                "queryVector": query_embedding,
-                "path": "embedding",
-                "limit": 5,  # number of nearest neighbors to return
-                "numCandidates": 50,  # number of HNSW entry points to explore
-            }
-        },
-        {
-            "$project": {
-                "_id": 0,
-                "title": 1,
-                "description": 1,
-                "resource_id": 1,
-                "estimated_cost": 1,
-                "metrics": "metrics",
-                "score": { '$meta': "vectorSearchScore" }            }
-        },
-    ]
-
-    results = coll.aggregate(pipeline)
-    
-    documents = list(results)
-    print(documents)
-    descriptions = [doc["description"] for doc in documents]
-    documents_reranked = vo.rerank(query, descriptions, model="rerank-2", top_k=3)
-    print(documents_reranked)
-
-    return documents_reranked
       
 if __name__ == "__main__":
     # Connect to MongoDB
     #gen_embeddings()
-    results = semantic_search("What were the most recent incident with POS in Texas?")
     for doc in results.results:
         print(doc)
     
