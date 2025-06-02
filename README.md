@@ -66,7 +66,6 @@ OPENAI_API_KEY = "sk-proj-openai-api-key"
    python populate_collections_ecommerce.py
    ```
 
-
 ## Usage
 
 To run the application and launch the interactive chatbot UI:
