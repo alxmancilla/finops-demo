@@ -2,6 +2,10 @@
 
 This project is a basic demonstration of Financial Operations (FinOps) using MongoDB as the database. The application generates applications, resources, as well as resource cost and resource usage per hour, while utilizing MongoDB for data storage and retrieval. It also features an interactive chatbot UI powered by Gradio for querying FinOps data.
 
+## Dashboard
+![Screenshot of a dashboard and chatbot for FinOps demo.](/img/finops_demo.png)
+
+
 ## Project Structure
 
 ```
