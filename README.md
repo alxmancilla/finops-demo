@@ -54,6 +54,7 @@ OPENAI_API_KEY = "sk-proj-openai-api-key"
 ```
 
 6. **Prepare initial dataset for FinOps demo:**
+
 6.a ***Restore from dump archive file***
    ```sh
    mongorestore --gzip --archive=data/finops_demo.gz --uri="PASTE_MONGO_URI"
