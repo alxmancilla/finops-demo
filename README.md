@@ -45,6 +45,28 @@ finops-demo
    pip install -r requirements.txt
    ```
 
+5. **Setup environment variables:**
+Create a demo_constants.py file with correct values for:
+ ```
+MONGO_URI = "mongodb_uri"
+VOYAGEAI_API_KEY = "vai-api-key"
+OPENAI_API_KEY = "sk-proj-openai-api-key"
+```
+
+6. **Prepare initial dataset for FinOps demo:**
+6.a ***Restore from dump archive file***
+   ```sh
+   mongorestore --gzip --archive=data/finops_demo.gz --uri="PASTE_MONGO_URI"
+   ```
+
+6.b ***Recreate using scripts***
+   ```sh
+   python create_collections.py
+   python populate_collections_pos.py
+   python populate_collections_ecommerce.py
+   ```
+
+
 ## Usage
 
 To run the application and launch the interactive chatbot UI:

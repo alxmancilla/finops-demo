@@ -34,7 +34,7 @@ def gen_embeddings():
 if __name__ == "__main__":
     # Connect to MongoDB
     #gen_embeddings()
-    for doc in results.results:
+    for doc in results:
         print(doc)
     
     

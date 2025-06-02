@@ -1,11 +1,12 @@
 # Contents of src/constants.py
 YEAR_TO_GENERATE = 2024
-MONGO_URI = "mongodb+srv://credentials@server/?appName=DemoApp"
-DATABASE_NAME = "db_name"
 
-VOYAGEAI_API_KEY = "pa-key"
-VOYAGEAI_MODEL="voyage-model"
-OPENAI_API_KEY = "sk-proj-key"
+DATABASE_NAME = "finops_demo"
+MONGO_URI = "mongodb+srv://credentials@server/?appName=DemoApp"
+
+VOYAGEAI_MODEL="voyage-3.5"
+VOYAGEAI_API_KEY = "vai-api-key"
+OPENAI_API_KEY = "sk-proj-openai-api-key"
 
 # --- Configuration ---
 LOCATIONS = [
