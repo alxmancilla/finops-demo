@@ -22,9 +22,9 @@ def gen_embeddings():
     texts = [doc["description"] for doc in docs]
 
     result = vo.embed(texts, model=demo_constants.VOYAGEAI_MODEL, input_type="document") 
-    print(result)
+    #print(result)
     embeddings = result.embeddings
-    print(len(embeddings))
+    #print(len(embeddings))
     
     # Store embeddings back to MongoDB
     for doc, embedding in zip(docs, embeddings):
