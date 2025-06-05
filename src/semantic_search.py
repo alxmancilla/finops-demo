@@ -10,6 +10,7 @@ from langchain_core.output_parsers import StrOutputParser
 client = pymongo.MongoClient(demo_constants.MONGO_URI)
 db = client[demo_constants.DATABASE_NAME]
 vo = voyageai.Client(api_key=demo_constants.VOYAGEAI_API_KEY)
+llm = ChatOpenAI(openai_api_key=demo_constants.OPENAI_API_KEY, temperature=0.5, model=demo_constants.OPENAI_LLM_MODEL)
 
 
 def semantic_search(query):
@@ -21,7 +22,7 @@ def semantic_search(query):
     """
     coll = db["incidents"]
 
-    query_embedding = vo.embed([query], model="voyage-3.5", input_type="query").embeddings[0]
+    query_embedding = vo.embed([query], model=demo_constants.VOYAGEAI_EMBEDDINDG_MODEL, input_type="query").embeddings[0]
 
     pipeline = [
         {
@@ -58,7 +59,7 @@ def rerank_documents(query, documents):
         documents (list): List of documents to rerank
     """
     descriptions = [doc["description"] for doc in documents]
-    reranked_docs = vo.rerank(query, descriptions, model="rerank-2", top_k=3)
+    reranked_docs = vo.rerank(query, descriptions, model=demo_constants.VOYAGEAI_RERANKER_MODEL, top_k=3)
     return reranked_docs
 
 def get_response(query, documents):
@@ -88,7 +89,6 @@ def get_response(query, documents):
         "question": RunnablePassthrough()
         }
 
-    llm = ChatOpenAI(openai_api_key=demo_constants.OPENAI_API_KEY, temperature=0.5, model="gpt-3.5-turbo")
 
     response_parser = StrOutputParser()
 

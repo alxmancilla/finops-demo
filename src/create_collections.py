@@ -11,8 +11,9 @@ This script creates MongoDB collections with proper validation schemas and confi
 - resource_utilization (time series)
 """
 
-import pymongo
 from pymongo import MongoClient
+from pymongo.operations import SearchIndexModel
+
 from demo_constants import (YEAR_TO_GENERATE, MONGO_URI, DATABASE_NAME, LOCATIONS)
 
 def create_collections():
@@ -25,9 +26,9 @@ def create_collections():
     collections = [
         "applications", 
         "cloud_resources", 
-        "cost_data", 
         "incidents", 
         "problems", 
+        "cost_data", 
         "resource_utilization"
     ]
 
@@ -179,5 +180,46 @@ def create_collections():
 
     print("\nCollection creation completed successfully!")
     
+
+def create_indexes():
+    """
+    Create indexes for the collections to improve query performance.
+    """
+    client = MongoClient(MONGO_URI)
+    db = client[DATABASE_NAME]
+
+    # Create indexes for applications collection
+    db.applications.create_index("app_id")
+    db.applications.create_index("business_unit")
+    print("Created indexes for applications collection")
+
+    # Create indexes for incidents collection
+    db.incidents.create_index("incident_id")
+    db.incidents.create_index("app_id")
+    print("Created indexes for incidents collection")
+
+    # Create indexes for problems collection
+    db.problems.create_index("problem_id")
+    db.problems.create_index("app_id")
+    print("Created indexes for problems collection")
+    
+    # Create your search index model, then create the search index
+    search_index_model = SearchIndexModel(
+    definition={
+        "mappings": {
+                "dynamic": False,
+                "fields": {
+                "description": {
+                    "type": "string"
+                }
+                }
+        }
+    },
+    name="search_index"
+    )
+    db.incidents.create_search_index(model=search_index_model)
+        
+
 if __name__ == "__main__":
-    create_collections()
+    #create_collections()
+    create_indexes()

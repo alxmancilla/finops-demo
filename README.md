@@ -50,36 +50,40 @@ finops-demo
    ```
 
 5. **Setup environment variables:**
-Create a demo_constants.py file with correct values for:
- ```
-MONGO_URI = "mongodb_uri"
-VOYAGEAI_API_KEY = "vai-api-key"
-OPENAI_API_KEY = "sk-proj-openai-api-key"
-```
+   Create a `demo_constants.py` file with correct values for:
+   ```
+   MONGO_URI = "mongodb_uri"
+   VOYAGEAI_API_KEY = "vai-api-key"
+   OPENAI_API_KEY = "sk-proj-openai-api-key"
+   ```
 
 6. **Prepare initial dataset for FinOps demo:**
 
-6.a ***Restore from dump archive file***
+   6.a ***Restore data from dump archive file***
    ```sh
    mongorestore --gzip --archive=data/finops_demo.gz --uri="PASTE_MONGO_URI"
    ```
 
-6.b ***Recreate using scripts***
+   6.b ***Recreate data using scripts***
    ```sh
-   python create_collections.py
-   python populate_collections_pos.py
-   python populate_collections_ecommerce.py
+   python src/create_collections.py
+   python src/populate_collections_pos.py
+   python src/populate_collection_ecommerce.py
    ```
 
 ## Usage
 
-To run the application and launch the interactive chatbot UI:
+To run the application and launch the interactive chatbot UI and dashboard:
 
 ```sh
 python src/main.py
 ```
 
-This will start a Gradio web interface where you can ask questions about incidents, costs, and other FinOps data. Example questions:
+This will start a Gradio web interface with a two-column layout:
+- **Left (80%)**: Embedded dashboard (iframe, customizable URL)
+- **Right (20%)**: Gradio-powered chatbot for natural language queries using the `q_and_a` method
+
+Example questions:
 - "What incidents impacted ecommerce platform in Dallas?"
 - "Find recent incidents for this app ecommerceplatform-app-01"
 - "Show the most recent incidents in Austin"
@@ -88,7 +92,9 @@ This will start a Gradio web interface where you can ask questions about inciden
 
 - **MongoDB Storage:** Store and manage financial and operational data in MongoDB.
 - **POS & Ecommerce Data Generation:** Scripts to generate and populate realistic POS and ecommerce datasets, including incidents and problems.
-- **Interactive Chatbot:** Gradio-powered UI for natural language queries using the `q_and_a` method and semantic search.
+- **Interactive Chatbot & Dashboard:** Gradio-powered UI for natural language queries and a customizable dashboard view.
+- **No circular imports:** All configuration and constants are now passed as arguments, not imported, to avoid runtime errors.
+- **Requirements:** Uses the latest compatible versions of dependencies, including Gradio 4.x.
 
 ## Contributing
 

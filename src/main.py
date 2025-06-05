@@ -8,7 +8,7 @@ from demo_constants import (YEAR_TO_GENERATE, MONGO_URI, DATABASE_NAME, LOCATION
 from create_collections import create_collections
 from populate_collections_pos import store_data_mongodb_hourly, generate_pos_data_for_year
 from populate_collection_ecommerce import store_ecommerce_data_mongodb, generate_ecommerce_data_for_year
-from semantic_search import q_and_a
+from hybrid_search import q_and_a
 
 def chatbot_interface(question):
     response = q_and_a(question)
@@ -41,10 +41,10 @@ def main():
     # Right: Gradio chatbot interface
     chatbot = gr.Interface(
         fn=chatbot_interface,
-        inputs=gr.Textbox(lines=2, placeholder="Ask a question about incidents, costs, etc..."),
+        inputs=gr.Textbox(lines=2, placeholder="Ask a question about incidents, applications, locations, etc..."),
         outputs=gr.Textbox(label="Answer"),
-        title="FinOps Demo Chatbot",
-        description="Ask questions about your FinOps data. Example: 'What incidents impacted ecommerce platform in Dallas?'"
+        title="FinOps assistant",
+        description="Ask questions about your data. Example: 'What incidents impacted ecommerce platform in Dallas?'"
     )
 
     # Layout: 2 columns, left 80%, right 20%
