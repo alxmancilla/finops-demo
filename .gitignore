@@ -2,5 +2,6 @@
 src/demo_constants.py
 .vscode/
 .venv/
+venv
 src/__pycache__/
 

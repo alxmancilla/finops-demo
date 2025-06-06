@@ -2,11 +2,12 @@ Flask==3.1.1
 pymongo==4.13.0
 requests==2.32.3
 python-dotenv==1.1.0
-voyageai==0.2.4
+voyageai==0.3.2
 langchain==0.3.21
 langchain_community==0.3.20
 langchain_core==0.3.49
 langchain_openai==0.3.11
 langchain_mongodb==0.6.0
+langchain-voyageai==0.1.6
 gradio==5.32.0
 

@@ -31,7 +31,7 @@ finops-demo
 
 2. **Create a virtual environment:**
    ```sh
-   python3 -m venv venv
+   python -m venv venv
    ```
 
 3. **Activate the virtual environment:**
