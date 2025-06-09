@@ -1,5 +1,6 @@
 import demo_constants 
 import voyageai
+import time
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_voyageai import VoyageAIEmbeddings
 from langchain_openai import ChatOpenAI
@@ -154,6 +155,7 @@ if __name__ == "__main__":
     print(question)
     response = q_and_a(question)
     print(response)
+    time.sleep(30)
   
     question = "What did I asked before?"
     print(question)

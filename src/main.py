@@ -8,7 +8,7 @@ from demo_constants import (YEAR_TO_GENERATE, MONGO_URI, DATABASE_NAME, LOCATION
 from create_collections import create_collections
 from populate_collections_pos import store_data_mongodb_hourly, generate_pos_data_for_year
 from populate_collection_ecommerce import store_ecommerce_data_mongodb, generate_ecommerce_data_for_year
-from hybrid_search import q_and_a
+from rag_with_memory import q_and_a
 
 def chatbot_interface(question):
     response = q_and_a(question)
@@ -35,7 +35,7 @@ def prepare_database():
 def main():
     # Left: Dashboard iframe (replace src with your dashboard URL or local file if needed)
     dashboard = gr.HTML(
-        '<iframe style="background: #F1F5F4;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);width: 100vw;height: 100vh;"  src="https://charts.mongodb.com/charts-alejandromr-rhflbxf/embed/dashboards?id=604434bb-49dc-4fe0-85a6-4c708d3eeee6&theme=light&autoRefresh=true&maxDataAge=3600&showTitleAndDesc=false&scalingWidth=scale&scalingHeight=fixed"></iframe>'
+        '<iframe style="background: #F1F5F4;border: none;border-radius: 2px;box-shadow: 0 2px 10px 0 rgba(70, 76, 79, .2);width: 100vw;height: 100vh;"  src="https://charts.mongodb.com/charts-alejandromr-rhflbxf/embed/dashboards?id=604434bb-49dc-4fe0-85a6-4c708d3eeee6&theme=light&autoRefresh=true&maxDataAge=300&showTitleAndDesc=false&scalingWidth=fixed&scalingHeight=fixed"></iframe>'
     )
 
     # Right: Gradio chatbot interface
