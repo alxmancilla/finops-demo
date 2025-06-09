@@ -6,6 +6,60 @@ import voyageai
 client = pymongo.MongoClient(demo_constants.MONGO_URI)
 db = client[demo_constants.DATABASE_NAME]
 vo = voyageai.Client(api_key=demo_constants.VOYAGEAI_API_KEY)
+llm = ChatOpenAI(openai_api_key=demo_constants.OPENAI_API_KEY, temperature=0.5, model=demo_constants.OPENAI_LLM_MODEL)
+
+
+def gen_contextual_embeddings(documents):
+    """
+    Get the response for the query based on the documents.
+    Args:
+        query (str): Query string
+        documents (list): List of documents to get response from
+    """
+    
+    template = """
+    You are a helpful assistant. Act as a Site Reliability Engineer expert. 
+    Use the following information to generate a brief description of an incident.
+    <document> 
+{{WHOLE_DOCUMENT}} 
+</document> 
+Here is the chunk we want to situate within the whole document 
+<chunk> 
+{{CHUNK_CONTENT}} 
+</chunk> 
+Please give a short succinct context to situate this chunk within the overall document for the purposes of improving search retrieval of the chunk. Answer only with the succinct context and nothing else. 
+
+            
+    Context:
+    {context}
+    
+    Question: {question}
+    """
+
+    texts = [doc["description"] for doc in documents]
+
+    custom_rag_prompt = PromptTemplate.from_template(template)
+
+    retrieve = {
+        "context": (lambda docs: "\n\n".join([d.document for d in documents.results])), 
+        "question": RunnablePassthrough()
+        }
+
+
+    response_parser = StrOutputParser()
+
+    rag_chain = (
+        retrieve
+        | custom_rag_prompt
+        | llm
+        | response_parser
+    )
+
+    answer = rag_chain.invoke(query)
+    
+    return answer
+
+    
 
 def gen_embeddings(document):
     """

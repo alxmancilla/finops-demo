@@ -233,9 +233,8 @@ def get_response(query, documents):
     You are a helpful assistant. Act as a Site Reliability Engineer expert. 
     Use the following pieces of context to answer the question at the end.
     Provide a detailed and accurate answer based on the context.
-    If you don't know the answer, just say that you don't know, don't try to make up an answer.
     Do not answer the question if there is no given context.
-    Do not answer the question if it is not related to the context."
+    Do not answer the question if it is not related to the context.
             
     Context:
     {context}
@@ -243,6 +242,7 @@ def get_response(query, documents):
     Question: {question}
     """
     custom_rag_prompt = PromptTemplate.from_template(template)
+    print("Documents for response: ", documents)
 
     retrieve = {
         "context": (lambda docs: "\n\n".join([d.document for d in documents.results])), 
