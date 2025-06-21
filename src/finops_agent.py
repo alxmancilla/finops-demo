@@ -112,7 +112,6 @@ class FinOpsContext(BaseModel):
         self.agent_name = demo_constants.AGENT_NAME
         self.debug_mode = demo_constants.DEBUG_MODE
         
-    
     def get_client(self) -> MongoClient:
         return MongoClient(self.connection_string)
     
@@ -369,7 +368,6 @@ async def demo_finops_agent():
     """
     # Initialize context (update connection string as needed)
     context = FinOpsContext()
-
     # Example queries
     queries = [
         "What are the top 5 applications by cost and their waste percentage?",

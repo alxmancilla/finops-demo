@@ -5,3 +5,4 @@ src/demo_constants.py
 venv
 src/__pycache__/
 
+src/.env
