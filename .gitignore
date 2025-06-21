@@ -2,6 +2,7 @@
 src/demo_constants.py
 .vscode/
 .venv/
+src/.env/
 venv
 src/__pycache__/
 
