@@ -14,9 +14,9 @@ class FinOpsConfig:
     def _load_config(self):
         """Load configuration from environment variables"""
         self.mongodb_connection = demo_constants.MONGO_URI
-        self.database_name = demo_constants.FINOPS_DATABASE_NAME
+        self.database_name = demo_constants.DATABASE_NAME
         self.openai_api_key = demo_constants.OPENAI_API_KEY
-        self.openai_model = demo_constants.OPENAI_MODEL
+        self.openai_model = demo_constants.OPENAI_LLM_MODEL
         self.agent_name = demo_constants.AGENT_NAME
         self.debug_mode = demo_constants.AGENT_DEBUG
         self.max_tools_per_call = demo_constants.MAX_TOOLS_PER_CALL
@@ -107,8 +107,8 @@ import logging
 class ConfiguredFinOpsAgent:
     """FinOps Agent with configuration management"""
     
-    def __init__(self, config_file: str = ".env"):
-        self.config = FinOpsConfig(config_file)
+    def __init__(self):
+        self.config = FinOpsConfig()
         self.setup_logging()
         
         # Validate configuration
@@ -117,10 +117,7 @@ class ConfiguredFinOpsAgent:
             raise ValueError(f"Configuration errors: {', '.join(validation['issues'])}")
         
         # Initialize context
-        self.context = FinOpsContext(
-            connection_string=self.config.mongodb_connection,
-            database_name=self.config.database_name
-        )
+        self.context = FinOpsContext()
         
         # Set up OpenAI (if using OpenAI models)
         if self.config.openai_api_key:

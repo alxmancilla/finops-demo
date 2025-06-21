@@ -16,4 +16,3 @@ typer==0.16.0
 pandas==2.3.0
 plotly==6.1.2
 streamlit==1.45.1
-load-dotenv=0.1.0

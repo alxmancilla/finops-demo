@@ -106,11 +106,11 @@ class FinOpsContext(BaseModel):
     def _load_config(self):
         """Load configuration from environment variables"""
         self.connection_string = demo_constants.MONGO_URI
-        self.database_name = demo_constants.FINOPS_DATABASE_NAME
+        self.database_name = demo_constants.DATABASE_NAME
         self.openai_api_key = demo_constants.OPENAI_API_KEY
-        self.openai_model = demo_constants.OPENAI_MODEL
+        self.openai_model = demo_constants.OPENAI_LLM_MODEL
         self.agent_name = demo_constants.AGENT_NAME
-        self.debug_mode = demo_constants.DEBUG_MODE
+        self.debug_mode = demo_constants.AGENT_DEBUG
         
     def get_client(self) -> MongoClient:
         return MongoClient(self.connection_string)
