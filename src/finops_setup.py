@@ -2,17 +2,28 @@ import os
 from pathlib import Path
 from typing import Dict, Optional, Any
 import json
+<<<<<<< HEAD
 import demo_constants
+=======
+from dotenv import load_dotenv
+>>>>>>> 8634db0 (First version of FinOps Agent)
 
 
 class FinOpsConfig:
     """Configuration management for FinOps Agent"""
     
+<<<<<<< HEAD
     def __init__(self):
+=======
+    def __init__(self, config_file: str = ".env"):
+        load_dotenv(config_file)
+        self.config_file = config_file
+>>>>>>> 8634db0 (First version of FinOps Agent)
         self._load_config()
     
     def _load_config(self):
         """Load configuration from environment variables"""
+<<<<<<< HEAD
         self.mongodb_connection = demo_constants.MONGO_URI
         self.database_name = demo_constants.FINOPS_DATABASE_NAME
         self.openai_api_key = demo_constants.OPENAI_API_KEY
@@ -22,6 +33,17 @@ class FinOpsConfig:
         self.max_tools_per_call = demo_constants.MAX_TOOLS_PER_CALL
         self.log_level = demo_constants.LOG_LEVEL
         self.log_file = demo_constants.LOG_FILE
+=======
+        self.mongodb_connection = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+        self.database_name = os.getenv("FINOPS_DATABASE_NAME", "finops_demo")
+        self.openai_api_key = os.getenv("OPENAI_API_KEY")
+        self.openai_model = os.getenv("OPENAI_MODEL", "gpt-4")
+        self.agent_name = os.getenv("AGENT_NAME", "FinOps Assistant")
+        self.debug_mode = os.getenv("AGENT_DEBUG", "false").lower() == "true"
+        self.max_tools_per_call = int(os.getenv("MAX_TOOLS_PER_CALL", "5"))
+        self.log_level = os.getenv("LOG_LEVEL", "INFO")
+        self.log_file = os.getenv("LOG_FILE", "finops_agent.log")
+>>>>>>> 8634db0 (First version of FinOps Agent)
     
     def validate_config(self) -> Dict[str, Any]:
         """Validate configuration and return status"""
