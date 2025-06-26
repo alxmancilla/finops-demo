@@ -11,13 +11,8 @@ from pymongo import MongoClient
 from pymongo.collection import Collection
 import os
 from enum import Enum
-<<<<<<< HEAD
 import demo_constants
 
-        
-=======
-
->>>>>>> 8634db0 (First version of FinOps Agent)
 
 # Pydantic Models for structured data
 class Environment(str, Enum):
@@ -97,7 +92,6 @@ class Problem(BaseModel):
 
 # Database Context for the agent
 class FinOpsContext(BaseModel):
-<<<<<<< HEAD
     connection_string : Optional[str] = None
     database_name: Optional[str] = None
     openai_api_key: Optional[str] = None
@@ -115,12 +109,10 @@ class FinOpsContext(BaseModel):
         self.database_name = demo_constants.FINOPS_DATABASE_NAME
         self.openai_api_key = demo_constants.OPENAI_API_KEY
         self.openai_model = demo_constants.OPENAI_MODEL
+        self.agent_name = demo_constants.AGENT_NAME
+        self.debug_mode = demo_constants.DEBUG_MODE
         
-=======
-    connection_string: str = Field(default="mongodb+srv://mancilla:d3m0p4ss@democluster.elz1q.mongodb.net/?retryWrites=true&w=majority&appName=DemoCluster")
-    database_name: str = Field(default="finops_demo")
     
->>>>>>> 8634db0 (First version of FinOps Agent)
     def get_client(self) -> MongoClient:
         return MongoClient(self.connection_string)
     
@@ -376,15 +368,8 @@ async def demo_finops_agent():
     Demonstrate the FinOps agent capabilities
     """
     # Initialize context (update connection string as needed)
-<<<<<<< HEAD
     context = FinOpsContext()
-=======
-    context = FinOpsContext(
-        connection_string= "mongodb+srv://mancilla:d3m0p4ss@democluster.elz1q.mongodb.net/?retryWrites=true&w=majority&appName=DemoCluster",
-        database_name="finops_demo"
-    )
->>>>>>> 8634db0 (First version of FinOps Agent)
-    
+
     # Example queries
     queries = [
         "What are the top 5 applications by cost and their waste percentage?",
@@ -410,16 +395,8 @@ async def demo_finops_agent():
 
 # CLI Interface for the agent
 class FinOpsAgentCLI:
-<<<<<<< HEAD
     def __init__(self):
         self.context = FinOpsContext()
-=======
-    def __init__(self, connection_string: str = "mongodb+srv://mancilla:d3m0p4ss@democluster.elz1q.mongodb.net/?retryWrites=true&w=majority&appName=DemoCluster"):
-        self.context = FinOpsContext(
-            connection_string=connection_string,
-            database_name="finops_demo"
-        )
->>>>>>> 8634db0 (First version of FinOps Agent)
     
     async def run_interactive(self):
         """
