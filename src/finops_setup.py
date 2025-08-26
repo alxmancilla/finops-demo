@@ -154,7 +154,7 @@ class ConfiguredFinOpsAgent:
             "model": self.config.openai_model,
             "database": self.config.database_name,
             "debug_mode": self.config.debug_mode,
-            "tools_available": len(finops_agent.tools),
+            "tools_available": len(finops_agent.tool),
             "status": "ready"
         }
 
