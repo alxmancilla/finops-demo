@@ -1,6 +1,6 @@
 # FinOps Demo
 
-This project is a basic demonstration of Financial Operations (FinOps) using MongoDB as the database. The application generates applications, resources, as well as resource cost and resource usage per hour, while utilizing MongoDB for data storage and retrieval. It also features an interactive chatbot UI powered by Gradio for querying FinOps data.
+This project is a basic demonstration of Financial Operations (FinOps) using MongoDB as the database. The application generates applications, resources, resource costs and usage per hour, and stores/retrieves data from MongoDB. It also includes an interactive chatbot UI powered by Gradio for querying FinOps data.
 
 ## Dashboard
 ![Screenshot of a dashboard and chatbot for FinOps demo.](/img/finops_demo.png)
@@ -10,15 +10,22 @@ This project is a basic demonstration of Financial Operations (FinOps) using Mon
 
 ```
 finops-demo
-├── src
-│   ├── main.py                       # Entry point of the application and Gradio chatbot UI
-│   ├── create_collections.py         # Script to create MongoDB collections
-│   ├── populate_collections_pos.py   # Populate POS-related collections and incidents/problems
-│   ├── populate_collection_ecommerce.py # Populate ecommerce-related collections
-│   ├── semantic_search.py            # Q&A and semantic search logic for chatbot
-├── requirements.txt                  # Project dependencies
-├── README.md                         # Project documentation
-└── .gitignore                        # Files to ignore in version control
+├── README.md
+├── requirements.txt
+├── data/
+│   └── finops_demo.gz
+├── img/
+│   └── finops_demo.png
+└── src/
+   ├── main.py                      # Entry point (run this to launch Gradio UI)
+   ├── create_collections.py        # Script to create MongoDB collections
+   ├── populate_collections_pos.py  # Populate POS-related collections and incidents/problems
+   ├── populate_collection_ecommerce.py # Populate ecommerce-related collections
+   ├── semantic_search.py           # Q&A and semantic search logic for chatbot
+   ├── finops_agent.py              # Agent implementation (tools + data access)
+   ├── demo_constants_dummy.py      # Example constants (copy/rename to override in env)
+   └── tests/
+      └── test_finops_agent.py
 ```
 
 ## Setup Instructions
@@ -49,12 +56,26 @@ finops-demo
    pip install -r requirements.txt
    ```
 
-5. **Setup environment variables:**
-   Create a `demo_constants.py` file with correct values for:
-   ```
-   MONGO_URI = "mongodb_uri"
-   VOYAGEAI_API_KEY = "vai-api-key"
-   OPENAI_API_KEY = "sk-proj-openai-api-key"
+5. **Setup configuration / environment variables:**
+   This repo provides `src/demo_constants_dummy.py` with example values. Do NOT commit your real secrets. Copy or create a `src/demo_constants.py` (same keys) or set equivalent environment variables as needed. Minimal variables used across the repo:
+
+   - `MONGO_URI` (MongoDB connection string)
+   - `DATABASE_NAME` (e.g., `finops_demo`)
+   - `OPENAI_API_KEY` (if you want agent LLM calls)
+   - `VOYAGEAI_API_KEY` (if voyageai features are used)
+
+   Example (create `src/demo_constants.py`):
+
+   ```py
+   MONGO_URI = "mongodb+srv://<user>:<pass>@cluster/..."
+   DATABASE_NAME = "finops_demo"
+   OPENAI_API_KEY = "sk-..."
+   VOYAGEAI_API_KEY = "vai-..."
+   OPENAI_LLM_MODEL = "gpt-4o"  # or other supported model
+   AGENT_NAME = "FinOps Assistant"
+   AGENT_DEBUG = False
+   YEAR_TO_GENERATE = 2024
+   LOCATIONS = ["Austin", "Dallas-Fort Worth", "Houston"]
    ```
 
 6. **Prepare initial dataset for FinOps demo:**
@@ -73,7 +94,7 @@ finops-demo
 
 ## Usage
 
-To run the application and launch the interactive chatbot UI and dashboard:
+To run the application and launch the interactive chatbot UI and dashboard (Gradio):
 
 ```sh
 python src/main.py
@@ -93,8 +114,17 @@ Example questions:
 - **MongoDB Storage:** Store and manage financial and operational data in MongoDB.
 - **POS & Ecommerce Data Generation:** Scripts to generate and populate realistic POS and ecommerce datasets, including incidents and problems.
 - **Interactive Chatbot & Dashboard:** Gradio-powered UI for natural language queries and a customizable dashboard view.
-- **No circular imports:** All configuration and constants are now passed as arguments, not imported, to avoid runtime errors.
-- **Requirements:** Uses the latest compatible versions of dependencies, including Gradio 4.x.
+- Notes & differences found
+
+- The codebase places all runnable scripts inside `src/` — update commands in the README accordingly (changed from top-level `main.py` to `src/main.py`).
+- There is a sample constants file at `src/demo_constants_dummy.py`; create `src/demo_constants.py` to override secrets/config.
+- Tests live under `src/tests/` (not `tests/` at the repository root).
+- The project uses an opinionated set of dependencies listed in `requirements.txt`; some packages reference `voyageai`, `pydantic-ai`, `gradio`, and `langchain` packages. Check versions in `requirements.txt` before installing.
+
+If you want, I can:
+
+- Add a minimal `src/demo_constants.py` template (without secrets) and a `.env` example.
+- Add a short CONTRIBUTING or quick-start script to automate venv creation and dependency installation.
 
 ## Contributing
 
