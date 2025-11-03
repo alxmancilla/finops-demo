@@ -13,6 +13,8 @@ DATABASE_NAME = "finops_demo"
 INCIDENTS_COLLECTION_NAME = "incidents"
 POS_COLLECTION_NAME = "pos_data"
 ECOMMERCE_COLLECTION_NAME = "ecommerce_data"
+HISTORY_COLLECTION_NAME="chat_history"
+
 YEAR_TO_GENERATE = 2024
 LOCATIONS = [
     "Austin",
